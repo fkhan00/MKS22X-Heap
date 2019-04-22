@@ -10,8 +10,12 @@ public class MyHeap{
     if(ary[index] > ary[index * 2 + 1] && ary[index] > ary[index * 2 + 2]){
       return;}
     if(ary[index] < ary[index * 2 + 1] && ary[index] < ary[index * 2 + 2]){
-      swap(ary, index, max(ary[index * 2 + 1], ary[index * 2 + 2]));
+      if(ary[index * 2 + 1] > ary[index * 2 + 2]){
+        swap(ary, index, index * 2 + 1);
       index = index * 2 + 1;}
+      else{
+        swap(ary, index, index * 2 + 2);
+        index = index * 2 + 2;}}
     pushDown(ary, size, index);}
 
   private static void swap(int[] ary, int ind1, int ind2){
@@ -32,17 +36,20 @@ public class MyHeap{
 
   public static void heapify(int[] ary){
     int[] heap = new int[ary.length];
-    int index = 0;
-    while(index * 2 + 1 < ary.length){
-      heap[index * 2 + 1] = ary[index];
-      pushUp(heap, index * 2 + 1);
-      if(index * 2 + 2 < ary.length){
-      heap[index * 2 + 2] = ary[index + 1];
-      pushUp(heap, index * 2 + 2);}
-      index ++;}
+    heap[0] = ary[0];
+    int index = 1;
+    while((index - 1) * 2 + 1 < ary.length){
+      heap[(index - 1) * 2 + 1] = ary[index];
+      pushUp(heap, (index - 1) * 2 + 1);
+      index ++;
+      if((index - 1) * 2 + 2 < ary.length){
+        heap[(index - 1) * 2 + 2] = ary[index];
+        pushUp(heap, (index - 1) * 2 + 2);
+        index ++;
+    }}
     for(int i = 0; i < ary.length; i++){
       ary[i] = heap[i];}}
-  
+
   public static void heapsort(int[] ary){
     heapify(ary);
     int temp = 0;
