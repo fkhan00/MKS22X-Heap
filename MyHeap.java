@@ -1,5 +1,4 @@
 public class MyHeap{
-  public static void heapify(int[] ary){}
 
   private static void pushDown(int[] ary, int size, int index){
     if(index * 2 + 1 > size){
@@ -29,8 +28,20 @@ public class MyHeap{
     if(index == 0 || ary[(index - 1) / 2] > ary[index]){
       return;}
     swap(ary, index, (index - 1) / 2);
-    pushUp(ary, (index - 1) / 2);
-  }
+    pushUp(ary, (index - 1) / 2);}
 
+  public static void heapify(int[] ary){
+    
+  }
+  public static void heapsort(int[] ary){
+    heapify(ary);
+    int temp = 0;
+    int size = ary.length - 1;
+    while(size < ary.length){
+    temp = ary[0];
+    ary[0] = ary[size] - 1;
+    pushDown(ary, size, 0);
+    ary[size] = temp;
+    size --;}}
 
 }
