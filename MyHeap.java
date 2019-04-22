@@ -31,8 +31,18 @@ public class MyHeap{
     pushUp(ary, (index - 1) / 2);}
 
   public static void heapify(int[] ary){
-    
-  }
+    int[] heap = new int[ary.length];
+    int index = 0;
+    while(index * 2 + 1 < ary.length){
+      heap[index * 2 + 1] = ary[index];
+      pushUp(heap, index * 2 + 1);
+      if(index * 2 + 2 < ary.length){
+      heap[index * 2 + 2] = ary[index + 1];
+      pushUp(heap, index * 2 + 2);}
+      index ++;}
+    for(int i = 0; i < ary.length; i++){
+      ary[i] = heap[i];}}
+  
   public static void heapsort(int[] ary){
     heapify(ary);
     int temp = 0;
