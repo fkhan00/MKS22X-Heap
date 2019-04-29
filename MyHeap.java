@@ -33,18 +33,25 @@ public class MyHeap{
       return;}
     swap(ary, index, (index - 1) / 2);
     pushUp(ary, (index - 1) / 2);}
-
+// heapify works
   public static void heapify(int[] ary){
     int[] heap = new int[ary.length];
     heap[0] = ary[0];
     int index = 1;
-    while((index - 1) * 2 + 1 < ary.length){
-      heap[(index - 1) * 2 + 1] = ary[index];
-      pushUp(heap, (index - 1) * 2 + 1);
+    int indexA = 1;
+    while((indexA - 1) * 2 + 1 < ary.length){
+      // while you're not at the end
+      indexA = (indexA - 1) * 2 + 1;
+      heap[indexA] = ary[index];
+      // put the index as a child
+      pushUp(heap, indexA);
+      //push the child up until it's in the right position
       index ++;
-      if((index - 1) * 2 + 2 < ary.length){
-        heap[(index - 1) * 2 + 2] = ary[index];
-        pushUp(heap, (index - 1) * 2 + 2);
+      //
+      if(indexA + 1 < ary.length){
+        indexA ++;
+        heap[indexA] = ary[index];
+        pushUp(heap, indexA);
         index ++;
     }}
     for(int i = 0; i < ary.length; i++){
