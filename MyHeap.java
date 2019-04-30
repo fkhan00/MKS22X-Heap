@@ -1,71 +1,37 @@
-public class MyHeap{
-
-  private static void pushDown(int[] ary, int size, int index){
-    if(index * 2 + 1 > size){
-      return;}
-    if(index * 2 + 2 > size){
-      if(ary[index] < ary[index * 2 + 1]){
-        swap(ary, index, index * 2 + 1);}
-      return;}
-    if(ary[index] > ary[index * 2 + 1] && ary[index] > ary[index * 2 + 2]){
-      return;}
-    if(ary[index] < ary[index * 2 + 1] && ary[index] < ary[index * 2 + 2]){
-      if(ary[index * 2 + 1] > ary[index * 2 + 2]){
-        swap(ary, index, index * 2 + 1);
-      index = index * 2 + 1;}
-      else{
-        swap(ary, index, index * 2 + 2);
-        index = index * 2 + 2;}}
-    pushDown(ary, size, index);}
-
-  private static void swap(int[] ary, int ind1, int ind2){
-    int temp = ary[ind2];
-    ary[ind2] = ary[ind1];
-    ary[ind1] = temp;}
-
-  private static int max(int a, int b){
-    if(a < b){
-      return b;}
-    return a;}
-
-  private static void pushUp(int[] ary, int index){
-    if(index == 0 || ary[(index - 1) / 2] > ary[index]){
-      return;}
-    swap(ary, index, (index - 1) / 2);
-    pushUp(ary, (index - 1) / 2);}
-// heapify works
-  public static void heapify(int[] ary){
-    int[] heap = new int[ary.length];
-    heap[0] = ary[0];
-    int index = 1;
-    int indexA = 1;
-    while((indexA - 1) * 2 + 1 < ary.length){
-      // while you're not at the end
-      indexA = (indexA - 1) * 2 + 1;
-      heap[indexA] = ary[index];
-      // put the index as a child
-      pushUp(heap, indexA);
-      //push the child up until it's in the right position
-      index ++;
-      //
-      if(indexA + 1 < ary.length){
-        indexA ++;
-        heap[indexA] = ary[index];
-        pushUp(heap, indexA);
-        index ++;
-    }}
-    for(int i = 0; i < ary.length; i++){
-      ary[i] = heap[i];}}
-
+public class MyHeap
+{
   public static void heapsort(int[] ary){
-    heapify(ary);
-    int temp = 0;
-    int size = ary.length - 1;
-    while(size < ary.length){
-    temp = ary[0];
-    ary[0] = ary[size] - 1;
-    pushDown(ary, size, 0);
-    ary[size] = temp;
-    size --;}}
+    int size = ary.length;
+    // start at bottom and fix parent and two child nodes
+    // then go up and fix the next triplet
+    for (int i = size / 2 - 1; i >= 0; i--){
+      heapify(ary, size, i);}
 
-}
+    for (int i = size-1; i>=0; i--){
+      swap(ary, 0, i);
+      heapify(ary, i, 0);}}
+
+
+    public static void swap(int[] ary, int index1, int index2){
+      int holder = ary[index1];
+      ary[index1] = ary[index2];
+      ary[index2] = holder;}
+
+      //recursive O(logn) heapify
+      //takes sub branch
+    public static void heapify(int arr[], int size, int parent){
+      //start at parent node
+      int maximum = parent;
+      int leftChild = 2 * parent + 1;
+      int rightChild = 2 * parent + 2;
+      // find maximum between two child nodes and parent node
+      if (leftChild < size && arr[leftChild] > arr[maximum])
+        maximum = leftChild;
+
+      if (rightChild < size && arr[rightChild] > arr[maximum])
+        maximum = rightChild;
+      // if maximum isn't parent node, swap maximum node with parent node
+      if (maximum != parent){
+        swap(arr, parent, maximum);
+        // recursive call to go down to next node
+        heapify(arr, size, maximum);}}}
