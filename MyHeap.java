@@ -1,15 +1,16 @@
 public class MyHeap
 {
   public static void heapsort(int[] ary){
-    int size = ary.length;
     // start at bottom and fix parent and two child nodes
     // then go up and fix the next triplet
-    for (int i = size / 2 - 1; i >= 0; i--){
-      heapify(ary, size, i);}
-
-    for (int i = size-1; i>=0; i--){
-      swap(ary, 0, i);
-      heapify(ary, i, 0);}}
+    int holder = 0;
+    for (int i = ary.length / 2 - 1; i >= 0; i--){
+      heapifyH(ary, ary.length, i);}
+    for (int i = ary.length-1; i>=0; i--){
+      holder = ary[0];
+      ary[0] = ary[i];
+      ary[i] = holder;
+      heapifyH(ary, i, 0);}}
 
 
     public static void swap(int[] ary, int index1, int index2){
@@ -19,7 +20,7 @@ public class MyHeap
 
       //recursive O(logn) heapify
       //takes sub branch
-    public static void heapify(int arr[], int size, int parent){
+    private static void heapifyH(int arr[], int size, int parent){
       //start at parent node
       int maximum = parent;
       int leftChild = 2 * parent + 1;
@@ -34,4 +35,9 @@ public class MyHeap
       if (maximum != parent){
         swap(arr, parent, maximum);
         // recursive call to go down to next node
-        heapify(arr, size, maximum);}}}
+        heapifyH(arr, size, maximum);}}
+
+    public static void heapify(int[] ary){
+      for (int i = ary.length / 2 - 1; i >= 0; i--){
+        heapifyH(ary, ary.length, i);}}
+      }
